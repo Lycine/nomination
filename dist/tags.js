@@ -1,4 +1,4 @@
-var radius = 180;
+var radius = 256;
 var dtr = Math.PI / 180;
 var d = 300;
 var mcList = [];
@@ -8,8 +8,8 @@ var lastb = 1;
 var distr = true;
 var tspeed = 10;
 var size = 250;
-var mouseX = 10;
-var mouseY = 10;
+var mouseX = 100;
+var mouseY = 100;
 var howElliptical = 1;
 var aA = null;
 var oDiv = null;
@@ -32,7 +32,7 @@ function init() {
   }
   sineCosine(0, 0, 0);
   positionAll();
-  setInterval(update, 1);
+  setInterval(update, 30);
 }
 
 function update() {
@@ -40,8 +40,8 @@ function update() {
   var b;
 
   if (active) {
-    a = (-Math.min(Math.max(-mouseY, -size), size) / radius) * tspeed + Math.round(Math.random() * 10);
-    b = (Math.min(Math.max(-mouseX, -size), size) / radius) * tspeed + Math.round(Math.random() * 10);
+    a = (-Math.min(Math.max(-mouseY, -size), size) / radius) * tspeed;
+    b = (Math.min(Math.max(-mouseX, -size), size) / radius) * tspeed;
 
   }
   else {
@@ -84,10 +84,8 @@ function update() {
 
     mcList[j].alpha = (mcList[j].alpha - 0.6) * (10 / 6);
   }
-
   doPosition();
   depthSort();
-
 }
 
 function depthSort() {
@@ -185,6 +183,8 @@ function sineCosine(a, b, c) {
   cc = Math.cos(c * dtr);
 }
 
+var willOpacityElements = new Array();
+
 function findBiggestFont() {
   var stus = [];
   $('#tagsList').children('a').each(function () {
@@ -197,9 +197,35 @@ function findBiggestFont() {
       var biggestFontSize = parseInt(biggest) * 1.7;
       $(this).css('font-size', biggestFontSize + 'px');
       $(this).css('color', '#FFEB3B');
-      $(this).css('z-index', '1');
-      return false;
+      $(this).css('z-index', '300');
+      biggest = 1000;
+    } else {
+      willOpacityElements.push(this);
+      // var opacity = parseFloat($(this).css('opacity'));
+      // $(this).css('opacity', 0.3);
+
+
+      // if (opacity >= 1) {
+      //   opacity = Math.round(opacity);
+      //   opacity /= 10;
+      //   $(this).css('opacity', opacity);
+      // } else {
+      //   opacity *= 0.7;
+      //   $(this).css('opacity', opacity);
+      // }
+
     }
+  });
+  for (var i = 0; i < 333; i++) {
+    setTimeout(becomeOpacity, 500);
+    console.log(i);
+  }
+
+}
+
+function becomeOpacity() {
+  $.each(willOpacityElements, function (index, value) {
+    $(willOpacityElements[index]).css('opacity', $(willOpacityElements[index]).css('opacity') - 0.003);
   });
 }
 
@@ -207,11 +233,13 @@ function findBiggestFont() {
 $(function () {
   $('#submitNames').on('click', function () {
     var stus = $('#names').val().split(';');
+    console.log('stus length: ' + stus.length);
     $.each(stus, function (index, value) {
       $('#tagsList').append('<a href="#" title=' + value + '>' + value + '</a>')
     });
     $('#nameForm').css('display', 'none');
     $('#startForm').css('display', 'inline');
+
     init();
 
   });
@@ -221,8 +249,9 @@ $(function () {
       active = false;
       $(this).attr('class', 'btn-lg btn btn-success');
       $(this).text('START');
-      setTimeout(findBiggestFont, 1300);
+      setTimeout(findBiggestFont, 1500);
     } else {
+      willOpacityElements = new Array();
       active = true;
       $('#tagsList').children("a").css("color", "#cfcfcf");
       setInterval(update, 1);
