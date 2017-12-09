@@ -6,15 +6,18 @@ var active = false;
 var lasta = 1;
 var lastb = 1;
 var distr = true;
-var tspeed = 10;
+var tspeed = 6; //速度
 var size = 250;
 var mouseX = 100;
 var mouseY = 100;
 var howElliptical = 1;
 var aA = null;
 var oDiv = null;
+var sleepTime;
+console.log('sleepTime: ' + sleepTime);
 
 function init() {
+  console.log('init');
   var i = 0;
   var oTag = null;
 
@@ -184,7 +187,8 @@ function sineCosine(a, b, c) {
 }
 
 var willOpacityElements = new Array();
-
+// var willBiggerElement = new Array();
+var willBiggerElement;
 function findBiggestFont() {
   var stus = [];
   $('#tagsList').children('a').each(function () {
@@ -194,8 +198,11 @@ function findBiggestFont() {
   var biggest = stus[stus.length - 1];
   $('#tagsList').children('a').each(function () {
     if (parseInt($(this).css('font-size').split('px')[0]) == parseInt(biggest)) {
-      var biggestFontSize = parseInt(biggest) * 1.7;
-      $(this).css('font-size', biggestFontSize + 'px');
+      // var biggestFontSize = parseInt(biggest) * 1.7;
+      // willBiggerElement.push(this);
+      willBiggerElement = this;
+      // $(this).css('font-size', '65px');
+      console.log($(this).css('font-size'));
       $(this).css('color', '#FFEB3B');
       $(this).css('z-index', '300');
       biggest = 1000;
@@ -216,24 +223,41 @@ function findBiggestFont() {
 
     }
   });
-  for (var i = 0; i < 333; i++) {
-    setTimeout(becomeOpacity, 500);
-    console.log(i);
+  // var biggestFontSize = parseInt(willBiggerElement.css('font-size').split('px')[0]);
+  for (var i = 0; i < 100; i++) {
+    setTimeout(becomeOpacity, 100);
   }
+  // console.log($(willBiggerElement[0]));
+  // $(willBiggerElement[0]).css('font-size','65px');
 
+  console.log($(willBiggerElement));
+  $(willBiggerElement).css('font-size','65px');
 }
 
 function becomeOpacity() {
   $.each(willOpacityElements, function (index, value) {
-    $(willOpacityElements[index]).css('opacity', $(willOpacityElements[index]).css('opacity') - 0.003);
+    $(willOpacityElements[index]).css('opacity', $(willOpacityElements[index]).css('opacity') - 0.01);
   });
 }
+
+// function becomeBigger(){
+//   if (biggestFontSize < 45){
+//     willBiggerElement.css('font-size').split('px')[0]);
+//   }
+//   for (var i = 0; i < 333; i++) {
+//
+//     setTimeout(becomeOpacity, 500);
+//   }
+//
+// }
 
 
 $(function () {
   $('#submitNames').on('click', function () {
     var stus = $('#names').val().split(';');
     console.log('stus length: ' + stus.length);
+    sleepTime = stus.length * 30;
+    console.log('sleepTime: ' + sleepTime);
     $.each(stus, function (index, value) {
       $('#tagsList').append('<a href="#" title=' + value + '>' + value + '</a>')
     });
@@ -249,7 +273,7 @@ $(function () {
       active = false;
       $(this).attr('class', 'btn-lg btn btn-success');
       $(this).text('START');
-      setTimeout(findBiggestFont, 1500);
+      setTimeout(findBiggestFont, sleepTime);
     } else {
       willOpacityElements = new Array();
       active = true;
