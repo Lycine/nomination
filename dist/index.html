@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>random nomination</title>
+  <title>Random nomination</title>
   <meta charset="utf-8">
   <meta name="author" content="petrel2015@foxmail.com"/>
   <link rel="stylesheet" href="bootstrap.min.css">
+  <link rel="stylesheet" href="bootstrap-slider.min.css">
   <link rel="stylesheet" href="style.css">
   <script type="text/javascript" src="jquery.min.js"></script>
   <script src="bootstrap.min.js"></script>
+  <script src="bootstrap-slider.min.js"></script>
   <script type="text/javascript" src="tags.js"></script>
 </head>
 
@@ -35,18 +37,36 @@
     </div>
   </div>
   <br>
-  <div class="row" id="startForm" style="display: none">
-    <div class="col-sm-4">
-    </div>
-    <div class="col-sm-4">
-      <div class="btn-group btn-group-justified">
-        <a id="startButton" class="btn-lg btn btn-success">START</a>
+  <div id="startForm" style="display: none">
+    
+    
+    <div class="row">
+      <div class="col-sm-4 col-sm-offset-4">
+        <div class="btn-group btn-group-justified">
+          <a id="startButton" class="btn-lg btn btn-success">START</a>
+        </div>
       </div>
     </div>
-    <div class="col-sm-4">
+    <br>
+  </div>
+  <div class="row">
+    <div class="col-sm-4 col-sm-offset-4">
+      <div class="well" style="background-color: #ddd">
+        rolling speed：
+        <input
+                id="rollingSpeedInput"
+                data-slider-id="ex1Slider"
+                type="text"
+                data-slider-min="1"
+                data-slider-max="80"
+                data-slider-step="1"
+                data-slider-value="70"
+        />
+      </div>
     </div>
   </div>
 </div>
+
 </body>
 </html>
 

@@ -8,8 +8,8 @@ var lastb = 1;
 var distr = true;
 var tspeed = 6; //速度
 var size = 250;
-var mouseX = 100;
-var mouseY = 100;
+var mouseX = 50;
+var mouseY = 50;
 var howElliptical = 1;
 var aA = null;
 var oDiv = null;
@@ -253,6 +253,25 @@ function becomeOpacity() {
 
 
 $(function () {
+  $('#rollingSpeedInput').slider({
+    formatter: function (value) {
+      return 'Current value: ' + value;
+    }
+  }).on('change', function (e) {
+    mouseX = e.value.newValue;
+    mouseY = e.value.newValue;
+    console.info(e.value.oldValue + '-->' + e.value.newValue);
+  });
+
+  // $('#spherRadiusInput').slider({
+  //   formatter: function (value) {
+  //     return 'Current value: ' + value;
+  //   }
+  // }).on('change', function (e) {
+  //   radius = e.value.newValue;
+  //   console.info(e.value.oldValue + '-->' + e.value.newValue);
+  // });
+
   $('#submitNames').on('click', function () {
     var stus = $('#names').val().split(';');
     console.log('stus length: ' + stus.length);
@@ -262,7 +281,7 @@ $(function () {
       $('#tagsList').append('<a href="#" title=' + value + '>' + value + '</a>')
     });
     $('#nameForm').css('display', 'none');
-    $('#startForm').css('display', 'inline');
+    $('#startForm').removeAttr('style');
 
     init();
 

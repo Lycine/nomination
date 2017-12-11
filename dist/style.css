@@ -23,3 +23,7 @@ body {
 #tagsList a:hover {
     letter-spacing: 2px;
 }
+
+#ex1Slider .slider-selection {
+    background: #BABABA;
+}

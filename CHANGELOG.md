@@ -1,3 +1,7 @@
+#### v0.1.2 (2017-12-11)
+
+- [add] Could Change rolling speed
+
 #### v0.1.1 (2017-12-09)
 
 - [fix] If name list long then missing names will not disappear slowly 
